@@ -111,6 +111,7 @@ class OpenSeaBulkFixedPricer
             try
             {
                 Thread.Sleep(2000);
+                //Click on sign button (signature message) to complete listing.
                 driver.FindElement(By.CssSelector("button[class='button btn--rounded btn-primary btn--large']")).Click();
                 Thread.Sleep(3000);
             }
