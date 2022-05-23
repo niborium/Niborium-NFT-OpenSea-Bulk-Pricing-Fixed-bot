@@ -2,12 +2,12 @@
 
 ## Instructions (Preparation)
 1) Download this repository (Download as zip or git clone).
-2) Edit the Program.cs file (All code is located in this file).
- You need to set asseturl at line 9.
- You need to set chain at line 10.
- You need to set contract at line 11.
- You need to set Startnumberofnft at line 12.
- You need to set Endnumberofnft at line 13.
+2) Edit the Program.cs file (All code is located in this file).\
+ You need to set asseturl at line 9.\
+ You need to set chain at line 10.\
+ You need to set contract at line 11.\
+ You need to set Startnumberofnft at line 12.\
+ You need to set Endnumberofnft at line 13.\
  You need to set sellprice at line 14.
 3) When everything above is configured correctly you can press on the sln file and open Visual Studio.
 4) Run the application and the bot starts. Follow the instruction in terminal.
