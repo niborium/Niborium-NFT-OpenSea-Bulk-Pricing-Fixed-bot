@@ -22,6 +22,7 @@ Note: This instructions will be displayed in the terminal aswell.
 4) Write confirm in this terminal below to start selling all your NFTS.
 
 ## Dependencies
+.NET 6.0 SDK (target framework)
 Selenium.WebDriver (4.1.0) installed Package.\
 Selenium.WebDriver.ChromeDriver (100.0.4896.6000) installed Package.\
 nkbihfbeogaeaoehlefnkodbefgpgknn-10.14.0-www.Crx4Chrome.com.crx (Metamask extension - in root folder).
