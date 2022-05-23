@@ -21,7 +21,7 @@ Note: This instructions will be displayed in the terminal aswell.
 1) Configure your metamask extension in opened browser (import wallet, add chains (if needed).
 2) Login to OpenSea with metamask you will land on target page (Make sure you see the sell button on NFTs in your target collection).
 3) Close the Metatask extension tab, only tab in browser that should be open is your OpenSea tab.
-4) Write confirm in this terminal below to start selling all your NFTS.
+4) Write confirm in this terminal to start selling all your NFTS.
 
 ## Dependencies
 .NET 6.0 SDK (target framework)\
