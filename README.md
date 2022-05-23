@@ -1,5 +1,7 @@
 # Niborium NFT OpenSea Bulk Pricing (Fixed) bot
 
+Last tested by author: 2022-05-23. Report bugs if found or proposals to improve bot.
+
 ## Instructions (Preparation)
 1) Download this repository (Download as zip or git clone).
 2) Edit the Program.cs file (All code is located in this file).\
