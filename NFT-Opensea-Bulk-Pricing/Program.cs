@@ -44,27 +44,49 @@ class OpenSeaBulkFixedPricer
             try
             {
                 driver.FindElement(By.Name("price")).SendKeys($"{sellprice}");
-                //Relay request error
-                if (driver.FindElement(By.CssSelector("div[class='Blockreact__Block-sc-1xf18x6-0 Flexreact__Flex-sc-1twd32i-0 jffCaG jYqxGr']")).Enabled)
+                try
                 {
-                    Console.WriteLine($"NFT {i} relay request error - NFT seems to be already listed for selling.");
-                    continue;
+                    //Relay request error
+                    if (driver.FindElement(By.CssSelector("div[class='Blockreact__Block-sc-1xf18x6-0 Flexreact__Flex-sc-1twd32i-0 jffCaG jYqxGr']")).Enabled)
+                    {
+                        Console.WriteLine($"NFT {i} relay request error - NFT seems to be already listed for selling.");
+                        continue;
+                    }
+                }
+                catch (NoSuchElementException)
+                {
+                    //No relay found continues.
                 }
             }
             catch (NoSuchElementException)
             {
-                //Cancel listing button exists (NFT is already listed by you)
-                if (driver.FindElement(By.CssSelector("button[class='Blockreact__Block-sc-1xf18x6-0 Buttonreact__StyledButton-sc-glfma3-0 ggOswT fzwDgL OrderManager--second-button']")).Enabled)
+                try
                 {
-                    Console.WriteLine($"NFT {i} already listed for selling by you.");
+                    //Cancel listing button exists (NFT is already listed by you)
+                    if (driver.FindElement(By.CssSelector("button[class='Blockreact__Block-sc-1xf18x6-0 Buttonreact__StyledButton-sc-glfma3-0 ggOswT fzwDgL OrderManager--second-button']")).Enabled)
+                    {
+                        Console.WriteLine($"NFT {i} already listed for selling by you.");
+                        continue;
+                    }
+                }
+                catch (NoSuchElementException)
+                {
                     continue;
                 }
-                //Make offer button exists (NFT owned and listed by another seller)
-                if (driver.FindElement(By.CssSelector("button[class='Blockreact__Block-sc-1xf18x6-0 Buttonreact__StyledButton-sc-glfma3-0 dpXlkZ gIDfxn']")).Enabled)
+                try
                 {
-                    Console.WriteLine($"NFT {i} owned and listed by another seller.");
+                    //Make offer button exists (NFT owned and listed by another seller)
+                    if (driver.FindElement(By.CssSelector("button[class='Blockreact__Block-sc-1xf18x6-0 Buttonreact__StyledButton-sc-glfma3-0 dpXlkZ gIDfxn']")).Enabled)
+                    {
+                        Console.WriteLine($"NFT {i} owned and listed by another seller.");
+                        continue;
+                    }
+                }
+                catch (NoSuchElementException)
+                {
                     continue;
                 }
+
                 //Ring-bearer error
                 Console.WriteLine($"NFT {i} failed sendkeys but tried repairing");
                 driver.Navigate().Refresh();
@@ -84,46 +106,38 @@ class OpenSeaBulkFixedPricer
             }
             try
             {
-                driver.FindElement(By.CssSelector("button[class='Blockreact__Block-sc-1xf18x6-0 Buttonreact__StyledButton-sc-glfma3-0 kXZare fzwDgL']")).Click();
-                Thread.Sleep(8000);
-            }
-            catch (NoSuchElementException)
-            {
-                //Not loading correctly
-                Console.WriteLine($"NFT {i} failed sendkeys but to find Blockreact - tried repairing. Cause: Probably slow page loading speed. Trying to repair.");
-                driver.Navigate().Refresh();
-                goto Setsellprice;
-            }
-            //Switching to metamask extension.
-            driver.SwitchTo().Window(driver.WindowHandles.ToList().Last());
+                Thread.Sleep(2000);
 
-            try
-            {
+                //Open new tab and go to MetaMask popup
+                ((IJavaScriptExecutor)driver).ExecuteScript("window.open();");
+                driver.SwitchTo().Window(driver.WindowHandles.Last());
+                driver.Navigate().GoToUrl("chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn/popup.html");
                 Thread.Sleep(6000);
+
                 //Scroll to bottom of page (signature message)
                 driver.FindElement(By.CssSelector("div[class='signature-request-message__scroll-button']")).Click();
-            }
-            catch(NoSuchElementException)
-            {
-                Console.WriteLine($"NFT {i} failed to scroll signature button in metamask (popup) - Something seem wrong with extension. Restart the bot and try again. If problem persist report it to author of bot for bug correction.");
-                Console.ReadLine();
-            }
-            try
-            {
-                Thread.Sleep(2000);
+                Thread.Sleep(8000);
+
                 //Click on sign button (signature message) to complete listing.
                 driver.FindElement(By.CssSelector("button[class='button btn--rounded btn-primary btn--large']")).Click();
                 Thread.Sleep(3000);
+                //Close tab and go back to main tab
+                driver.Close();
+                Thread.Sleep(2000);
+                driver.SwitchTo().Window(driver.WindowHandles.ToList().Last());
+                //NFT listing complted
+                Console.WriteLine($"NFT {i} is now listed for sell price {sellprice}");
+                Thread.Sleep(2000);
             }
             catch (NoSuchElementException)
             {
-                Console.WriteLine($"NFT {i} failed to click on sign button in metamask (popup) - Something seem wrong with extension. Restart the bot and try again. If problem persist report it to author of bot for bug correction.");
-                Console.ReadLine();
+                //Not loading correctly (MetaMask)
+                Console.WriteLine("Something wrong with Metamask extension. Trying to repair. If stuck report to author of bot.");
+                driver.Close();
+                Thread.Sleep(2000);
+                driver.SwitchTo().Window(driver.WindowHandles.ToList().Last());
+                goto Setsellprice;
             }
-            //Switching context from metamask extension to main page.
-            driver.SwitchTo().Window(driver.WindowHandles.ToList().Last());
-            Console.WriteLine($"NFT {i} is now listed for sell price {sellprice}");
-            Thread.Sleep(1000);
         }
     }
 }
