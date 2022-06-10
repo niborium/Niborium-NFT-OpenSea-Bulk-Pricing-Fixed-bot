@@ -25,8 +25,8 @@ Note: This instructions will be displayed in the terminal aswell.
 
 ## Dependencies
 .NET 6.0 SDK (target framework)\
-Selenium.WebDriver (4.1.0) installed Package.\
-Selenium.WebDriver.ChromeDriver (100.0.4896.6000) installed Package.\
+Selenium.WebDriver (4.2.0) installed Package.\
+Selenium.WebDriver.ChromeDriver (102.0.5005.6102) installed Package.\
 nkbihfbeogaeaoehlefnkodbefgpgknn-10.14.0-www.Crx4Chrome.com.crx (Metamask extension - in root folder).
 
 ## LICENSE (MIT)
