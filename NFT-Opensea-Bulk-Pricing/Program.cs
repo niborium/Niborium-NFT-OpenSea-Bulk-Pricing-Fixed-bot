@@ -43,6 +43,7 @@ class OpenSeaBulkFixedPricer
             Thread.Sleep(8000);
             try
             {
+                Thread.Sleep(3000);
                 driver.FindElement(By.Name("price")).SendKeys($"{sellprice}");
                 try
                 {
