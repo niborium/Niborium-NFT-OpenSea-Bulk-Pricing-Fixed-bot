@@ -145,6 +145,15 @@ class OpenSeaBulkFixedPricer
                 driver.SwitchTo().Window(driver.WindowHandles.ToList().Last());
                 goto Setsellprice;
             }
+            catch (ElementClickInterceptedException)
+            {
+                //Not loading correctly (MetaMask)
+                Console.WriteLine("Something wrong with Metamask extension. Trying to repair. If stuck report to author of bot.");
+                driver.Close();
+                Thread.Sleep(2000);
+                driver.SwitchTo().Window(driver.WindowHandles.ToList().Last());
+                goto Setsellprice;
+            }
         }
     }
 }
