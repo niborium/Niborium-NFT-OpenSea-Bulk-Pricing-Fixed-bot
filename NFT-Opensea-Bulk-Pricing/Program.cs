@@ -105,6 +105,12 @@ class OpenSeaBulkFixedPricer
                 driver.Navigate().Refresh();
                 goto Setsellprice;
             }
+            catch (ElementClickInterceptedException)
+            {
+                Console.WriteLine($"NFT {i} - failed to find submit button. Unusual error. Trying to repair.");
+                driver.Navigate().Refresh();
+                goto Setsellprice;
+            }
             try
             {
                 Thread.Sleep(2000);
